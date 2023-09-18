@@ -1,13 +1,13 @@
 {
-    "name":              "hevelius/files_external_onedrive",
+    "name":              "cialtronale/files_external_onedrive",
     "description":       "OneDrive for OwnCloud.",
-    "homepage":          "https://github.com/hevelius/files_external_onedrive",
+    "homepage":          "https://github.com/cialtronale/files_external_onedrive",
     "license":           "GPL-3.0-or-later",
     "prefer-stable":     true,
     "minimum-stability": "dev",
 
     "keywords": [
-        "hevelius",
+        "cialtronale",
         "onedrive",
         "php",
         "OwnCloud",
@@ -16,38 +16,48 @@
 
     "authors": [
         {
-            "name":     "hevelius",
-            "homepage": "https://github.com/hevelius/files_external_onedrive"
+            "name":     "cialtronale",
+            "homepage": "https://github.com/cialtronale/files_external_onedrive"
         }
     ],
 
     "support": {
-        "email":  "mario.perrotta@unimi.it",
-        "issues": "https://github.com/hevelius/files_external_onedrive/issues",
-        "wiki":   "https://github.com/hevelius/files_external_onedrive/wiki",
-        "source": "https://github.com/hevelius/files_external_onedrive"
+        "email":  "alessandro.marca@unimi.it",
+        "issues": "https://github.com/cialtronale/files_external_onedrive/issues",
+        "wiki":   "https://github.com/cialtronale/files_external_onedrive/wiki",
+        "source": "https://github.com/cialtronale/files_external_onedrive"
     },
     
     "require": {
         "league/flysystem-cached-adapter": "*",
-	    "hevelius/flysystem-onedrive": "*",
+	    "cialtronale/flysystem-onedrive": "*",
         "league/oauth2-client": "*",
         "php":      ">= 5.4 || >= 7.0",
         "ext-curl": "*"
     },
+
+    "repositories": [
+      {
+          "url": "https://github.com/cialtronale/flysystem-onedrive.git",
+          "type": "git"
+      }
+    ],
 
     "replace": {
         "guzzlehttp/guzzle": "*"
     },
 
     "require-dev": {
-      "phpunit/phpunit": "^8.0"
+      "phpunit/phpunit": "^8.0",
+        "nextcloud/coding-standard": "^1.1"
     },
 
     "autoload": {
     },
 
     "scripts": {
-      "test": "vendor/bin/phpunit --configuration tests/phpunit.xml tests"
+      "test": "vendor/bin/phpunit --configuration tests/phpunit.xml tests",
+      "cs:check": "php-cs-fixer fix --dry-run --diff",
+      "cs:fix": "php-cs-fixer fix"
     }
 }

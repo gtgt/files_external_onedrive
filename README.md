@@ -2,9 +2,8 @@
 ### external storage support for NextCloud
 
 [![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
-[![Build Status](https://travis-ci.org/hevelius/files_external_onedrive.svg?branch=master)](https://travis-ci.org/hevelius/files_external_onedrive)
-[![codecov](https://codecov.io/gh/hevelius/files_external_onedrive/branch/master/graph/badge.svg?token=AnnDxRQkSj)](https://codecov.io/gh/hevelius/files_external_onedrive)
-[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VUYAAKGJZB9U6)
+[![Build Status](https://travis-ci.org/cialtronale/files_external_onedrive.svg?branch=master)](https://travis-ci.org/cialtronale/files_external_onedrive)
+
 
 Requirements:
 * php with zlib support
@@ -14,7 +13,7 @@ Requirements:
 - Get the code
 ```bash
 $ cd /server_path/apps
-$ git clone https://github.com/hevelius/files_external_onedrive
+$ git clone https://github.com/cialtronale/files_external_onedrive
 $ cd files_external_onedrive
 $ composer install
 ```

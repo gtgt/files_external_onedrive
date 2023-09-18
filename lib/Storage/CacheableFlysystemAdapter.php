@@ -27,7 +27,7 @@ use Icewind\Streams\IteratorDirectory;
 use League\Flysystem\AdapterInterface;
 use League\Flysystem\FileNotFoundException;
 use League\Flysystem\Plugin\GetWithMetadata;
-use Flysystem;
+use OCA\Files_external_onedrive\Storage\Flysystem;
 
 /**
  * Generic Cacheable adapter between flysystem adapters and owncloud's storage system

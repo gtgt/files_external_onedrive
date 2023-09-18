@@ -1,21 +1,23 @@
-$(document).ready(function () {
+window.addEventListener('DOMContentLoaded', function() {
 	var backendId = 'files_external_onedrive';
 	var backendUrl = OC.generateUrl('apps/' + backendId + '/oauth');
 
-	function displayGranted ($tr) {
+	function displayGranted($tr) {
 		$tr.find('.configuration input.auth-param').attr('disabled', 'disabled').addClass('disabled-success');
 	}
-
-	OCA.Files_External.Settings.mountConfig.whenSelectAuthMechanism(function ($tr, authMechanism, scheme, onCompletion) {
+	console.log("Ciao sono quiiiiiiiiCustom!!!!!");
+	OCA.Files_External.Settings.mountConfig.whenSelectAuthMechanism(function($tr, authMechanism, scheme, onCompletion) {
 		if (authMechanism === 'oauth2::oauth2' &&
 		$tr.hasClass('files_external_onedrive')) {
+			console.log("sto settando il timeout");
 			var config = $tr.find('.configuration');
 			// hack to prevent conflict with oauth2 code from files_external
 			// wait for files_external to setup the config ui and then change the button
 			setTimeout(function () {
+				console.log("startedTimeOut")
 				config.find('[name="oauth2_grant"]')
 					.attr('name', 'oauth2_grant_onedrive');
-			}, 50);
+			}, 1000);
 
 			onCompletion.then(function () {
 				var configured = $tr.find('[data-parameter="configured"]');
@@ -32,28 +34,30 @@ $(document).ready(function () {
 						client_secret = atob(localStorage.getItem('files_external_onedrive_oauth2'));
 					}
 
-					var params = {};
-					window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
-						params[key] = value;
-					});
+					if (client_id != '' && client_secret != '') {
+						var params = {};
+						window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
+							params[key] = value;
+						});
 
-					if (
-						params.code !== undefined
-						&& typeof client_id === "string"
-						&& client_id !== ''
-						&& typeof client_secret === "string"
-						&& client_secret !== ''
-					) {
-						$('.configuration').trigger('onedrive_oauth_step2', [{
-							backend_id: $tr.attr('class'),
-							client_id: client_id,
-							client_secret: client_secret,
-							redirect: location.protocol + '//' + location.host + location.pathname,
-							tr: $tr,
-							code: params.code || '',
-							state: params.state || ''
-						}]);
-					}
+						if (
+							params.code !== undefined
+							&& typeof client_id === "string"
+							&& client_id !== ''
+							&& typeof client_secret === "string"
+							&& client_secret !== ''
+						) {
+							$('.configuration').trigger('onedrive_oauth_step2', [{
+								backend_id: $tr.attr('class'),
+								client_id: client_id,
+								client_secret: client_secret,
+								redirect: location.protocol + '//' + location.host + location.pathname,
+								tr: $tr,
+								code: params.code || '',
+								state: params.state || ''
+							}]);
+						}
+				}
 				}
 			});
 		}
@@ -61,10 +65,12 @@ $(document).ready(function () {
 
 	$('#externalStorage').on('click', '[name="oauth2_grant_onedrive"]', function (event) {
 		event.preventDefault();
+		alert("Sono quella giusta");
 		var tr = $(this).parent().parent();
+		var configured = $(this).parent().find('[data-parameter="configured"]');
 		var client_id = $(this).parent().find('[data-parameter="client_id"]').val().trim();
 		var client_secret = $(this).parent().find('[data-parameter="client_secret"]').val().trim();
-		if (client_id !== '' && client_secret !== '') {
+		if (client_id != '' && client_secret != '') {
 			$('.configuration').trigger('onedrive_oauth_step1', [{
 				backend_id: tr.attr('class'),
 				client_id: client_id,
@@ -79,7 +85,6 @@ $(document).ready(function () {
 		if (data['backend_id'] !== backendId) {
 			return false;	// means the trigger is not for this storage adapter
 		}
-
 		OCA.Files_External.Settings.OAuth2.getOnedriveAuthUrl(backendUrl, data);
 	});
 

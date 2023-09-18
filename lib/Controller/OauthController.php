@@ -1,9 +1,8 @@
 <?php
 
 /**
- * @author Mario Perrotta <mario.perrotta@unimi.it>
- *
- * @copyright Copyright (c) 2018, Mario Perrotta <mario.perrotta@unimi.it>
+ * @author Marca Alessandro <alessandro.marca@unimi.it>
+ * @copyright Copyright (c) 2018, Marca Alessandro <alessandro.marca@unimi.it>
  * @license GPL-2.0
  *
  * This program is free software; you can redistribute it and/or modify it
@@ -19,42 +18,39 @@
  * You should have received a copy of the GNU General Public License along
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
 
 namespace OCA\Files_external_onedrive\Controller;
 
-
-use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http;
+use OCP\AppFramework\Http\DataResponse;
 use OCP\IL10N;
 use OCP\IRequest;
-use Microsoft\Graph\Graph;
-use GuzzleHttp\Client as GuzzleHttpClient;
 
 /**
- * Oauth controller for OneDrive
+ * Oauth controller for OneDrive.
  */
-class OauthController extends Controller
-{
+class OauthController extends Controller {
+	public const URL_AUTHORIZE = 'https://login.microsoftonline.com/common/oauth2/v2.0/authorize';
+	public const URL_ACCESS_TOKEN = 'https://login.microsoftonline.com/common/oauth2/v2.0/token';
+	public const SCOPES = 'Files.Read Files.Read.All Files.ReadWrite Files.ReadWrite.All User.Read Sites.ReadWrite.All offline_access';
+
 	/**
-	 * L10N service
+	 * L10N service.
 	 *
 	 * @var IL10N
 	 */
 	protected $l10n;
 
-	const URL_AUTHORIZE = 'https://login.microsoftonline.com/common/oauth2/v2.0/authorize';
-	const URL_ACCESS_TOKEN = 'https://login.microsoftonline.com/common/oauth2/v2.0/token';
-	const SCOPES = 'Files.Read Files.Read.All Files.ReadWrite Files.ReadWrite.All User.Read Sites.ReadWrite.All offline_access';
+	protected $proxy;
 
 	/**
 	 * Creates a new storages controller.
 	 *
-	 * @param string $AppName application name
+	 * @param string   $AppName application name
 	 * @param IRequest $request request
-	 * @param IL10N $l10n l10n service
+	 * @param IL10N    $l10n    l10n service
 	 */
 	public function __construct(
 		$AppName,
@@ -63,17 +59,21 @@ class OauthController extends Controller
 	) {
 		parent::__construct($AppName, $request);
 		$this->l10n = $l10n;
+		$config = new \OC\Config('config/');
+		$this->proxy = $config->getValue('proxy');
 	}
 
 	/**
-	 * Create a storage from its parameters
-	 * 
+	 * Create a storage from its parameters.
+	 *
 	 * @param string $client_id
 	 * @param string $client_secret
 	 * @param string $redirect
-	 * @param int $step
+	 * @param int    $step
 	 * @param string $code
+	 *
 	 * @return DataResponse
+	 *
 	 * @NoAdminRequired
 	 */
 	public function receiveToken(
@@ -86,35 +86,33 @@ class OauthController extends Controller
 		$clientId = $client_id;
 		$clientSecret = $client_secret;
 
-		if ($clientId !== null && $clientSecret !== null && $redirect !== null) {
-
+		if (null !== $clientId && null !== $clientSecret && null !== $redirect) {
 			$provider = new \League\OAuth2\Client\Provider\GenericProvider([
-				'clientId'          => $clientId,
-				'clientSecret'      => $clientSecret,
-				'redirectUri'       => $redirect,
-				'urlAuthorize'            => self::URL_AUTHORIZE,
-				'urlAccessToken'          => self::URL_ACCESS_TOKEN,
+				'clientId' => $clientId,
+				'clientSecret' => $clientSecret,
+				'redirectUri' => $redirect,
+				'urlAuthorize' => self::URL_AUTHORIZE,
+				'urlAccessToken' => self::URL_ACCESS_TOKEN,
 				'urlResourceOwnerDetails' => '',
-				'scopes'					  => self::SCOPES
+				'proxy' => $this->proxy,
 			]);
 
 			$data = [
 				'client_id' => $clientId,
 			];
 
-			if ($step !== null) {
+			if (null !== $step) {
 				$step = (int) $step;
-				if ($step === 1) {
+				if (1 === $step) {
 					try {
-
 						$authUrl = $provider->getAuthorizationUrl();
 
 						return new DataResponse(
 							[
 								'status' => 'success',
 								'data' => [
-									'url' => $authUrl
-								]
+									'url' => $authUrl,
+								],
 							]
 						);
 					} catch (Exception $exception) {
@@ -128,19 +126,17 @@ class OauthController extends Controller
 							Http::STATUS_UNPROCESSABLE_ENTITY
 						);
 					}
-				} else if ($step === 2 && $code !== null) {
-
+				} elseif (2 === $step && null !== $code) {
 					try {
-
 						$token = $provider->getAccessToken('authorization_code', [
-							'code' => $code
+							'code' => $code,
 						]);
 
 						if (!isset($token)) {
 							return new DataResponse(
 								[
 									'status' => 'error',
-									'data' => $token
+									'data' => $token,
 								],
 								Http::STATUS_BAD_REQUEST
 							);
@@ -149,7 +145,7 @@ class OauthController extends Controller
 						$token = json_encode($token);
 						$token = json_decode($token, true);
 						$token['code_uid'] = uniqid();
-						
+
 						return new DataResponse(
 							[
 								'status' => 'success',
@@ -178,7 +174,6 @@ class OauthController extends Controller
 							],
 							Http::STATUS_UNPROCESSABLE_ENTITY
 						);
-				
 					}
 				}
 			}

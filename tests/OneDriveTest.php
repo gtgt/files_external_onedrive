@@ -2,7 +2,6 @@
 
 /**
  * @author Mario Perrotta <mario.perrotta@unimi.it>
- *
  * @copyright Copyright (c) 2017, ownCloud GmbH.
  * @license GPL-2.0
  *
@@ -19,26 +18,28 @@
  * You should have received a copy of the GNU General Public License along
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
 
 namespace OCA\Files_external_onedrive\Tests;
 
 use PHPUnit\Framework\TestCase;
 
-class OneDriveTest extends TestCase
-{
-    private $config;
-    private $storage;
+/**
+ * @internal
+ *
+ * @coversNothing
+ */
+class OneDriveTest extends TestCase {
+	private $config;
+	private $storage;
 
-    protected function setUp():void
-    {
-        parent::setUp();
-        $this->config = json_decode(file_get_contents('config.json'), true);
-        //$this->storage = new \OCA\Files_external_onedrive\Storage\OneDrive($this->config);
-    }
+	protected function setUp(): void {
+		parent::setUp();
+		$this->config = json_decode(file_get_contents('config.json'), true);
+		// $this->storage = new \OCA\Files_external_onedrive\Storage\OneDrive($this->config);
+	}
 
-    public function testCanRunTests() {
-        $this->assertTrue(true);
-    }
+	public function testCanRunTests() {
+		$this->assertTrue(true);
+	}
 }

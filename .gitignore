@@ -6,6 +6,7 @@ coverage.xml
 .vscode
 .phpunit.result*
 launch.json
+.php-cs-fixer.cache
 
 # Mac OS X artifacts
 .DS_Store

@@ -19,24 +19,26 @@
  * You should have received a copy of the GNU General Public License along
  * with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- *
  */
 
 namespace OCA\Files_external_onedrive\Tests;
 
 use PHPUnit\Framework\TestCase;
 
-class ApplicationTest extends TestCase
-{
-    private $app;
+/**
+ * @internal
+ *
+ * @coversNothing
+ */
+class ApplicationTest extends TestCase {
+	private $app;
 
-    protected function setUp():void
-    {
-        parent::setUp();
-        $this->app = new \OCA\Files_external_onedrive\AppInfo\Application();
-    }
+	protected function setUp(): void {
+		parent::setUp();
+		$this->app = new \OCA\Files_external_onedrive\AppInfo\Application();
+	}
 
-    public function testGetBackends() {
-        $this->assertCount(1, $this->app->getBackends());
-    }
+	public function testGetBackends() {
+		$this->assertCount(1, $this->app->getBackends());
+	}
 }

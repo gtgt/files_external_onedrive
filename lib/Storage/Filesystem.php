@@ -1,9 +1,8 @@
 <?php
 
 /**
- * @author Mario Perrotta <mario.perrotta@unimi.it>
- *
- * @copyright Copyright (c) 2018, Mario Perrotta <mario.perrotta@unimi.it>
+ * @author Marca Alessandro <alessandro.marca@unimi.it>
+ * @copyright Copyright (c) 2018, Marca Alessandro <alessandro.marca@unimi.it>
  * @license AGPL-3.0
  *
  * This code is free software: you can redistribute it and/or modify
@@ -17,19 +16,18 @@
  *
  * You should have received a copy of the GNU Affero General Public License, version 3,
  * along with this program.  If not, see <http://www.gnu.org/licenses/>
- *
  */
 
 namespace OCA\Files_external_onedrive\Storage;
 
-use League\Flysystem\Util;
 use League\Flysystem\Filesystem as VendorFilesystem;
+use League\Flysystem\Util;
 
 class Filesystem extends VendorFilesystem {
-	const IS_CASE_INSENSITIVE_STORAGE = 'isCaseInsensitiveStorage';
+	public const IS_CASE_INSENSITIVE_STORAGE = 'isCaseInsensitiveStorage';
 
 	/**
-	 * @inheritdoc
+	 * {@inheritdoc}
 	 */
 	public function listContents($directory = '', $recursive = false) {
 		$directory = Util::normalizePath($directory);

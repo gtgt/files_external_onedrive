@@ -23,11 +23,10 @@
 
 namespace OCA\Files_external_onedrive\BackgroundJob;
 
-use OCA\Files_External\Lib\StorageConfig;
 use OC\BackgroundJob\TimedJob;
+use OCA\Files_External\Lib\StorageConfig;
 
 class RefreshToken extends TimedJob {
-
 	private $appName = 'files_external_onedrive';
 
 	public function __construct() {
@@ -43,7 +42,7 @@ class RefreshToken extends TimedJob {
 	 * @return boolean      True on success, False on failure
 	 */
 	protected function refreshToken(StorageConfig $storageConfig) {
-  		$opts = $storageConfig->getBackendOptions();
+		$opts = $storageConfig->getBackendOptions();
 		if ($opts['configured'] === 'false') {
 			return false;
 		}
@@ -56,7 +55,7 @@ class RefreshToken extends TimedJob {
 			if ($isTokenExpired = $storage->isTokenExpired()) {
 				$token = $storage->refreshToken($clientId, $clientSecret, $token);
 				$DBConfigService = \OC::$server->query('OCA\\Files_External\\Service\\DBConfigService');
-				$DBConfigService->setConfig($storageConfig->getId(), $key_token, $token);	
+				$DBConfigService->setConfig($storageConfig->getId(), $key_token, $token);
 			} else {
 				$storage->getScanner()->scan('/', true);
 			}

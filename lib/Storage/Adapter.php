@@ -22,26 +22,20 @@
 
 namespace OCA\Files_external_onedrive\Storage;
 
-use League\Flysystem\Config;
-use League\Flysystem\Util;
+class Adapter extends \MarioPerrotta\FlysystemOneDrive\OneDriveAdapter {
+	/**
+	 * {@inheritdoc}
+	 */
+	public function getMimetype($path) {
+		return $this->getMetadata($path);
+	}
 
-class Adapter extends \MarioPerrotta\FlysystemOneDrive\OneDriveAdapter
-{   
-    /**
-     * {@inheritdoc}
-     */
-    public function getMimetype($path)
-    {
-        return $this->getMetadata($path);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getTimestamp($path)
-    {
-        $response = $this->getMetadata($path);
-        $timestamp = $response['timestamp'];
-        return $timestamp;
-    }
+	/**
+	 * {@inheritdoc}
+	 */
+	public function getTimestamp($path) {
+		$response = $this->getMetadata($path);
+		$timestamp = $response['timestamp'];
+		return $timestamp;
+	}
 }

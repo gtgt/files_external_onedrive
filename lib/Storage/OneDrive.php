@@ -23,7 +23,6 @@
 namespace OCA\Files_external_onedrive\Storage;
 
 use Microsoft\Graph\Graph;
-
 // use OC\Files\Storage\Flysystem;
 
 class OneDrive extends CacheableFlysystemAdapter {

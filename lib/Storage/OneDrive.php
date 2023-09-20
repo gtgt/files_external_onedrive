@@ -70,7 +70,7 @@ class OneDrive extends CacheableFlysystemAdapter {
 	/**
 	 * @var Proxy
 	 */
-	private $proxy;
+	private $proxy = '';
 
 	/**
 	 * @var string
@@ -196,7 +196,7 @@ class OneDrive extends CacheableFlysystemAdapter {
 			'urlAccessToken' => 'https://login.microsoftonline.com/common/oauth2/v2.0/token',
 			'urlResourceOwnerDetails' => '',
 			'proxy' => $this->proxy,
-			'scopes' => 'Files.Read Files.Read.All Files.ReadWrite Files.ReadWrite.All User.Read Sites.ReadWrite.All offline_access',
+			'scopes' => 'Files.Read Files.Read.All Files.ReadWrite Files.ReadWrite.All User.Read Sites.ReadWrite.All offline_access'
 		]);
 
 		$newToken = $provider->getAccessToken('refresh_token', [

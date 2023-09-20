@@ -5,7 +5,7 @@ window.addEventListener('DOMContentLoaded', function() {
 	function displayGranted($tr) {
 		$tr.find('.configuration input.auth-param').attr('disabled', 'disabled').addClass('disabled-success');
 	}
-	console.log("Ciao sono quiiiiiiiiCustom!!!!!");
+
 	OCA.Files_External.Settings.mountConfig.whenSelectAuthMechanism(function($tr, authMechanism, scheme, onCompletion) {
 		if (authMechanism === 'oauth2::oauth2' &&
 		$tr.hasClass('files_external_onedrive')) {
@@ -14,7 +14,7 @@ window.addEventListener('DOMContentLoaded', function() {
 			// hack to prevent conflict with oauth2 code from files_external
 			// wait for files_external to setup the config ui and then change the button
 			setTimeout(function () {
-				console.log("startedTimeOut")
+				console.log("startedTimeOut");
 				config.find('[name="oauth2_grant"]')
 					.attr('name', 'oauth2_grant_onedrive');
 			}, 1000);
@@ -65,7 +65,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
 	$('#externalStorage').on('click', '[name="oauth2_grant_onedrive"]', function (event) {
 		event.preventDefault();
-		alert("Sono quella giusta");
+		console.log("corect js loaded");
 		var tr = $(this).parent().parent();
 		var configured = $(this).parent().find('[data-parameter="configured"]');
 		var client_id = $(this).parent().find('[data-parameter="client_id"]').val().trim();

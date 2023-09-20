@@ -94,7 +94,7 @@ class OneDrive extends CacheableFlysystemAdapter {
 
 			$config = new \OC\Config('config/');
 			$this->proxy = $config->getValue('proxy');
-			$this->proxy = 'proxy.unimi.it:8080';
+
 			$this->client->setProxyPort($this->proxy, false);
 
 			$this->adapter = new Adapter($this->client, 'root', '/me/drive/', true);
@@ -195,7 +195,7 @@ class OneDrive extends CacheableFlysystemAdapter {
 			'urlAuthorize' => 'https://login.microsoftonline.com/common/oauth2/v2.0/authorize',
 			'urlAccessToken' => 'https://login.microsoftonline.com/common/oauth2/v2.0/token',
 			'urlResourceOwnerDetails' => '',
-			'proxy' => 'proxy.unimi.it:8080',
+			'proxy' => $this->proxy,
 			'scopes' => 'Files.Read Files.Read.All Files.ReadWrite Files.ReadWrite.All User.Read Sites.ReadWrite.All offline_access'
 		]);
 

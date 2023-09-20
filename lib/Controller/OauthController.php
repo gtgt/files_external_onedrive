@@ -95,6 +95,7 @@ class OauthController extends Controller {
 				'urlAccessToken' => self::URL_ACCESS_TOKEN,
 				'urlResourceOwnerDetails' => '',
 				'proxy' => $this->proxy,
+				'scopes' => self::SCOPES
 			]);
 
 			$data = [

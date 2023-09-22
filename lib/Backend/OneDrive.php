@@ -40,7 +40,7 @@ class OneDrive extends Backend {
 			->setText($l->t('OneDrive'))
 			->addParameters([])
 			->addAuthScheme(AuthMechanism::SCHEME_OAUTH2)
-			->addCustomJs('../../../apps/files_external_onedrive/js/onedrive')
+			->addCustomJs("../../..$appWebPath/js/onedrive")
 		;
 	}
 }

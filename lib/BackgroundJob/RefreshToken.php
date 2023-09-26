@@ -1,8 +1,8 @@
 <?php
 /**
- * @author Mario Perrotta <mario.perrotta@unimi.it>
+ * @author Marca Alessandro <alessandro.marca@unimi.it>
  *
- * @copyright Copyright (c) 2019, Mario Perrotta, University of Milan
+ * @copyright Copyright (c) 2023, Marca Alessandro, University of Milan
  * @license GPL-2.0
  *
  * This program is free software; you can redistribute it and/or modify it
@@ -23,14 +23,16 @@
 
 namespace OCA\Files_external_onedrive\BackgroundJob;
 
-use OC\BackgroundJob\TimedJob;
-use OCA\Files_External\Lib\StorageConfig;
+use \OCP\BackgroundJob\TimedJob;
+use \OCA\Files_External\Lib\StorageConfig;
+use \OCP\AppFramework\Utility\ITimeFactory;
 
 class RefreshToken extends TimedJob {
 	private $appName = 'files_external_onedrive';
 
-	public function __construct() {
-		$this->setInterval(60);
+	public function __construct(ITimeFactory $time) {
+		parent::__construct($time);
+		parent::setInterval(60);
 	}
 
 	/**

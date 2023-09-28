@@ -2,7 +2,7 @@
 
 /**
  * @author Marca Alessandro <alessandro.marca@unimi.it>
- * @copyright Copyright (c) 2018, Marca Alessandro <alessandro.marca@unimi.it>
+ * @copyright Copyright (c) 2023, Marca Alessandro <alessandro.marca@unimi.it>
  * @license GPL-2.0
  *
  * This program is free software; you can redistribute it and/or modify it
@@ -26,6 +26,9 @@ use Microsoft\Graph\Graph;
 
 class OneDrive extends CacheableFlysystemAdapter {
 	public const APP_NAME = 'files_external_onedrive';
+	public const URL_AUTHORIZE = 'https://login.microsoftonline.com/common/oauth2/v2.0/authorize';
+	public const URL_ACCESS_TOKEN = 'https://login.microsoftonline.com/common/oauth2/v2.0/token';
+	public const SCOPES = 'Files.Read Files.Read.All Files.ReadWrite Files.ReadWrite.All User.Read Sites.ReadWrite.All offline_access';
 
 	/**
 	 * @var string
@@ -192,11 +195,11 @@ class OneDrive extends CacheableFlysystemAdapter {
 			'clientId' => $clientId,
 			'clientSecret' => $clientSecret,
 			'redirectUri' => '',
-			'urlAuthorize' => 'https://login.microsoftonline.com/common/oauth2/v2.0/authorize',
-			'urlAccessToken' => 'https://login.microsoftonline.com/common/oauth2/v2.0/token',
+			'urlAuthorize' => self::URL_AUTHORIZE,
+			'urlAccessToken' => self::URL_ACCESS_TOKEN,
 			'urlResourceOwnerDetails' => '',
 			'proxy' => $this->proxy,
-			'scopes' => 'Files.Read Files.Read.All Files.ReadWrite Files.ReadWrite.All User.Read Sites.ReadWrite.All offline_access'
+			'scopes' => self::SCOPES
 		]);
 
 		$newToken = $provider->getAccessToken('refresh_token', [

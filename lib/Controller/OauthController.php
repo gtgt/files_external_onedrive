@@ -2,7 +2,7 @@
 
 /**
  * @author Marca Alessandro <alessandro.marca@unimi.it>
- * @copyright Copyright (c) 2018, Marca Alessandro <alessandro.marca@unimi.it>
+ * @copyright Copyright (c) 2023, Marca Alessandro <alessandro.marca@unimi.it>
  * @license GPL-2.0
  *
  * This program is free software; you can redistribute it and/or modify it

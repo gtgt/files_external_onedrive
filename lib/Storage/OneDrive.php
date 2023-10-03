@@ -132,6 +132,12 @@ class OneDrive extends CacheableFlysystemAdapter {
 	}
 
 	public function test() {
+		if ($this->isTokenExpired()) {
+			$token = $this->refreshToken($this->clientId,$this->clientSecret,base64_encode(gzdeflate(json_encode($this->token), 9)));
+			$DBConfigService = \OC::$server->query('OCA\\Files_External\\Service\\DBConfigService');
+			$DBConfigService->setConfig($this->id, "token", $token);
+			$this->token = json_decode(gzinflate(base64_decode($token)));
+		}
 		return !$this->isTokenExpired();
 	}
 
@@ -185,7 +191,6 @@ class OneDrive extends CacheableFlysystemAdapter {
 				return true;
 			}
 		}
-
 		return false;
 	}
 
